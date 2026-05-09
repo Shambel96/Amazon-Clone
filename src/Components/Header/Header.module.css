@@ -1,0 +1,262 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.header_container {
+  display: flex;
+  align-items: center;
+  background-color: #1a1a1a;
+  color: white;
+  gap: 10px;
+  height: 70px;
+  width: 100%;
+}
+
+.logo_container {
+  max-width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo_container img {
+  width: 60%;
+  height: auto;
+  padding-top: 5px;
+  margin-left: 30px;
+  vertical-align: middle;
+}
+
+.delivery_info {
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.delivery_info p {
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.search_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.search_container select,
+.search_container input {
+  padding: 10px;
+  font-weight: bold;
+  outline: 1px solid white;
+}
+
+.search_container select {
+  border: none;
+  background-color: #f0f0f0;
+}
+
+.search_container input {
+  border: 1px solid white;
+  width: 100%;
+  margin-right: -2px;
+}
+
+/* .search_container div {
+    background-color: #febd69;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+} */
+.search_container svg {
+  background-color: #febd69;
+  padding: 7px;
+  color: #1a1a1a;
+}
+
+.search_container svg:hover {
+  background-color: #f0a847;
+  cursor: pointer;
+}
+
+.search_container:focus-within {
+  border: 2px solid rgb(235, 161, 173);
+}
+
+.order_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  max-width: 450px;
+}
+
+.order_container a {
+  text-decoration: none;
+  color: white;
+}
+
+.order_container p {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.language {
+  width: 100px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.language select {
+  background-color: #1a1a1a;
+  border: none;
+  color: white;
+}
+
+.language img {
+  width: 40%;
+  height: auto;
+  display: block;
+}
+
+.cart {
+  position: relative;
+}
+.cart span {
+  position: absolute;
+  top: -5px;
+  left: 10px;
+  font-weight: bold;
+  background-color: #1a1a1a;
+  color: orange;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 20px;
+}
+.order_container a:hover,
+.delivery_info:hover,
+.logo_container a:hover,
+.lower_header ul li:hover {
+  border: 1px solid #febd69;
+  border-radius: 5px;
+}
+.lower_header {
+  display: flex;
+  gap: 20px;
+  background-color: #232f3e;
+  color: white;
+  height: inherit;
+}
+.lower_header ul {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+}
+.lower_header ul li {
+  padding: 8px;
+}
+.lower_header a {
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+}
+.lower_header a:hover {
+  border: 1px solid #febd69;
+  border-radius: 5px;
+  padding: 5px;
+}
+.lower_header ul li:first-child {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+@media screen and (max-width: 768px) {
+  .header_container {
+    display: flex;
+    flex-direction: column !important;
+    height: auto;
+    padding: 10px 0;
+  }
+  .delivery_info {
+    flex-direction: column;
+  }
+  .search_container {
+    width: 90%;
+    margin-top: 10px;
+  }
+  .order_container {
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+  }
+  .lower_header {
+    flex-direction: column;
+    gap: 10px;
+    height: auto;
+    padding: 10px 0;
+  }
+  .lower_header ul {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .logo_container img {
+    width: 80%;
+  }
+  .delivery_info {
+    font-size: 10px;
+  }
+  .search_container select,
+  .search_container input {
+    padding: 8px;
+    font-size: 12px;
+  }
+  .search_container svg {
+    padding: 5px;
+  }
+  .order_container p {
+    font-size: 10px;
+  }
+  .language {
+    width: 80px;
+    padding: 8px;
+  }
+  .language img {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .header_container {
+    flex-direction: column !important;
+    height: auto;
+  }
+  .lower_header ul li:not(:first-child) {
+    display: none;
+  }
+  .language {
+    display: none;
+  }
+  .order_container {
+    flex-direction: row;
+    gap: 10px;
+    margin-left: 10px;
+  }
+}
