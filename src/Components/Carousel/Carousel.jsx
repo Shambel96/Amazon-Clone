@@ -8,11 +8,11 @@ function CarouselEffect() {
   return (
     <div className={classes.carousel}>
       <Carousel
-        autoplay={true}
+        autoPlay={true}
         infiniteLoop={true}
         showThumbs={false}
         showIndicators={false}
-        interval={200}
+        showStatus={false}
       >
         {img.map((imgLink, index) => (
           <img key={index} src={imgLink} alt={`Slide ${index + 1} image`} />
