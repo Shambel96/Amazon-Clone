@@ -9,15 +9,15 @@ import ProductDetail from "./Pages/ProductDetail/ProductDetail"; // fixed casing
 import Results from "./Pages/Results/Results";
 function Routing() {
   return (
-    <BrowserRouter>                                          {/* ✅ was <Router> */}
+    <BrowserRouter>                                         
       <Routes>
-        <Route path="/" element={<Landing />} />             {/* ✅ was element={Landing} */}
+        <Route path="/" element={<Landing />} />             
         <Route path="/payment" element={<Payment />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Orders />} />
-        <Route path="/product-detail" element={<ProductDetail />} />
+        <Route path="/products/:productId" element={<ProductDetail />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/categories/:CategoryName" element={<Results />} /> {/* ✅ was element={Results} */}
+        <Route path="/categories/:CategoryName" element={<Results />} /> 
       </Routes>
     </BrowserRouter>
   );
