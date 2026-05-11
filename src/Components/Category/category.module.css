@@ -5,17 +5,25 @@
 }
 
 .category {
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1 / 1;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 10px;
   border-radius: 10px;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  will-change: transform;
 }
 
-.category a {
+.categoryLink {
   text-decoration: none;
   color: rgb(35, 35, 35);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  cursor: pointer;
+  outline: none;
 }
 
 .category img {
@@ -23,6 +31,7 @@
   object-fit: contain;
   max-height: 210px;
   padding: 0px 10px;
+  transition: transform 220ms ease;
 }
 
 .category h2,
@@ -30,10 +39,12 @@
   font-size: 18px;
   padding-left: 20px;
 }
+
 .category h2 {
   font-size: 20px;
   font-weight: bold;
 }
+
 .category p {
   color: rgb(9, 139, 209);
   font-size: 12px;
@@ -41,9 +52,59 @@
   border: 1px solid rgb(9, 139, 209);
   border-radius: 5px;
   width: 80px;
-  margin-left: 20px;
   padding: 5px;
   align-self: center;
+  transition: background-color 180ms ease, color 180ms ease,
+    transform 180ms ease, border-color 180ms ease;
+  position: relative;
+  margin-top: 25px;
+}
+
+.category p::after {
+  content: "→";
+  margin-left: 6px;
+  display: inline-block;
+  transform: translateX(0);
+  transition: transform 180ms ease;
+}
+
+.category:hover,
+.category:focus-within {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+.category:focus-within {
+  outline: 2px solid rgba(9, 139, 209, 0.35);
+  outline-offset: 3px;
+}
+
+.category:hover img,
+.category:focus-within img {
+  transform: scale(1.03);
+}
+
+.category:hover p,
+.category:focus-within p {
+  background-color: rgb(9, 139, 209);
+  color: white;
+  border-color: rgb(9, 139, 209);
+  transform: translateY(-1px);
+}
+
+.category:hover p::after,
+.category:focus-within p::after {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .category,
+  .category img,
+  .category p,
+  .category p::after {
+    transition: none;
+  }
 }
 
 .category_container {
@@ -52,4 +113,30 @@
   grid-template-columns: repeat(4, 1fr);
   place-items: center;
   margin-top: -10%;
+  gap: 24px;
+  padding: 0 16px;
+}
+
+@media (max-width: 1200px) {
+  .category_container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .category_container {
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .category_container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .category {
+    max-width: 100%;
+  }
 }
