@@ -4,7 +4,12 @@ import { FaShoppingCart } from "react-icons/fa";
 import { SlLocationPin } from "react-icons/sl";
 import LowerHeader from "./LowerHeader";
 import { Link } from "react-router-dom";
+import { DataContext } from "../DataProvider/DataProvider";
+import { useContext } from "react";
+
 const Header = () => {
+  const { state, dispatch } = useContext(DataContext);
+  const { basket } = state;
   return (
     <>
       <section>
@@ -54,7 +59,7 @@ const Header = () => {
             </Link>
             <Link to="/cart" className={classes.cart}>
               <FaShoppingCart size={35} />
-              <span>0</span>
+              <span>{basket.length}</span>
             </Link>
           </div>
         </div>
