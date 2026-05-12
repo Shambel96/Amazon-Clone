@@ -1,9 +1,13 @@
-import React from "react";
 import classes from "./Product.module.css";
 import Rating from "@mui/material/Rating";
 import CurrencyFormat from "../CurrencyFormat/CurrencyFormat";
 import { Link } from "react-router-dom";
 function ProductCard({ product }) {
+  const ratingValue =
+    typeof product?.rating?.rate === "number" ? product.rating.rate : 0;
+  const ratingCount =
+    typeof product?.rating?.count === "number" ? product.rating.count : 0;
+
   return (
     <div className={classes.card_container}>
       <Link to={`/products/${product.id}`} state={{ product }}>
@@ -12,8 +16,8 @@ function ProductCard({ product }) {
       <div>
         <h3>{product.title}</h3>
         <div className={classes.rating}>
-          <Rating value={product.rating.rate} precision={0.1} />
-          <span> ({product.rating.count} reviews)</span>
+          <Rating value={ratingValue} precision={0.1} readOnly />
+          <span> ({ratingCount} reviews)</span>
         </div>
         <div>
           {/*price*/}
