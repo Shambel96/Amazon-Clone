@@ -1,5 +1,3 @@
-import React from "react";
-import Category from "./Category";
 import classes from "./category.module.css";
 import { Link } from "react-router-dom";
 

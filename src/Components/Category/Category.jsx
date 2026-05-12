@@ -1,4 +1,3 @@
-import React from 'react'
 import { categoryInfo } from "./CategoryInfos";
 import CategoryCard from "./CategoryCard";
 import classes from "./category.module.css";

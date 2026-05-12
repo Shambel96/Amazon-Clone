@@ -1,4 +1,3 @@
-import React from "react";
 import classes from "./Header.module.css";
 import { FaSearch } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
