@@ -11,16 +11,22 @@ function Product() {
     setLoading(true);
     axios
       .get("https://fakestoreapi.com/products")
-      .then((response) => setProducts(response.data),
-    setLoading(false)
-  )
-      .catch((error) => console.error("Error fetching products:", error),
-    setLoading(false));
+      .then((response) => setProducts(response.data), setLoading(false))
+      .catch(
+        (error) => console.error("Error fetching products:", error),
+        setLoading(false),
+      );
   }, []);
   return (
     <>
       {loading ? (
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "50px",
+          }}
+        >
           <Loader />
         </div>
       ) : (
