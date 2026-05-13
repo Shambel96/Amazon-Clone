@@ -1,17 +1,33 @@
 import React from "react";
 import { type } from "./action.type";
 
-
 export const initialState = {
   basket: [],
 };
 export const reducer = (state, action) => {
   switch (action.type) {
     case type.ADD_TO_BASKET:
-      return {
-        ...state,
-        basket: [...state.basket, action.item],
-      };
+      const existingItemIndex = state.basket.findIndex(
+        (basketItem) => basketItem.id === action.item.id,
+      );
+      if (existingItemIndex >= 0) {
+        // Item already in the basket, update quantity
+        const updatedBasket = [...state.basket];
+        updatedBasket[existingItemIndex].quantity += action.item.quantity;
+        return {
+          ...state,
+          basket: updatedBasket,
+        };
+      } else {
+        // Item not in the basket, add it with quantity
+        return {
+          ...state,
+          basket: [
+            ...state.basket,
+            { ...action.item, quantity: action.item.quantity || 1 },
+          ],
+        };
+      }
     case type.REMOVE_FROM_BASKET:
       const index = state.basket.findIndex(
         (basketItem) => basketItem.id === action.id,
@@ -27,6 +43,15 @@ export const reducer = (state, action) => {
       return {
         ...state,
         basket: newBasket,
+      };
+    case type.UPDATE_BASKET_QUANTITY:
+      return {
+        ...state,
+        basket: state.basket.map((basketItem) =>
+          basketItem.id === action.id
+            ? { ...basketItem, quantity: Math.max(1, action.quantity) }
+            : basketItem,
+        ),
       };
   }
 };
