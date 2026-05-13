@@ -10,6 +10,11 @@ import { useContext } from "react";
 const Header = () => {
   const { state, dispatch } = useContext(DataContext);
   const { basket } = state;
+  const totalItems = basket.reduce(
+    (count, item) => count + (item.quantity || 1),
+    0,
+  );
+
   return (
     <section className={classes.fixed}>
       <section>
@@ -59,7 +64,13 @@ const Header = () => {
             </Link>
             <Link to="/cart" className={classes.cart}>
               <FaShoppingCart size={35} />
-              <span>{basket.length}</span>
+              <span className={classes.cart_badge}>{totalItems}</span>
+              <div className={classes.cart_content}>
+                <p className={classes.cart_label}>Cart</p>
+                <p className={classes.cart_count}>
+                  {totalItems === 0 ? "Empty" : `${totalItems} item${totalItems !== 1 ? "s" : ""}`}
+                </p>
+              </div>
             </Link>
           </div>
         </div>
