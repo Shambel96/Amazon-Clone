@@ -18,6 +18,7 @@ function ProductCard({ product }) {
         image: product.image,
         price: product.price,
         rating: product.rating,
+        quantity: 1,
       },
     });
   };

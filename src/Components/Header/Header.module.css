@@ -8,6 +8,11 @@
   top: 0;
   z-index: 10;
 }
+.bold{
+  font-weight: 700;
+  font-size: 15px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
 .header_container {
   display: flex;
   align-items: center;
@@ -194,6 +199,7 @@
 .lower_header ul li:hover {
   border: 1px solid #febd69;
   border-radius: 5px;
+  padding: 5px;
 }
 .lower_header {
   display: flex;

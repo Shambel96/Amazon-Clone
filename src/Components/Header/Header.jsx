@@ -56,11 +56,11 @@ const Header = () => {
 
             <Link to="/signup">
               <p>Sign In</p>
-              <span>Account and Lists</span>
+              <span className={classes.bold}>Account and Lists</span>
             </Link>
             <Link to="/orders">
               <p>Returns</p>
-              <span>& Orders</span>
+              <span className={classes.bold}>& Orders</span>
             </Link>
             <Link to="/cart" className={classes.cart}>
               <FaShoppingCart size={35} />
