@@ -1,8 +1,7 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./Pages/Landing/Landing";
 import Payment from "./Pages/Payment/Payment";
-import SignUp from "./Pages/Auth/SignUp";
+import Auth from "./Pages/Auth/Auth";
 import Cart from "./Pages/Cart/Cart";
 import Orders from "./Pages/Orders/Orders";
 import ProductDetail from "./Pages/ProductDetail/ProductDetail"; // fixed casing too
@@ -16,7 +15,7 @@ function Routing() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/products/:productId" element={<ProductDetail />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/auth" element={<Auth />} />
         <Route path="/categories/:CategoryName" element={<Results />} /> 
       </Routes>
     </BrowserRouter>
