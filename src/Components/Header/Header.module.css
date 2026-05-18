@@ -8,10 +8,9 @@
   top: 0;
   z-index: 10;
 }
-.bold{
+.bold, .ethiopia{
   font-weight: 700;
   font-size: 15px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .header_container {
   display: flex;
@@ -21,6 +20,7 @@
   gap: 10px;
   height: 70px;
   width: 100%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .logo_container {

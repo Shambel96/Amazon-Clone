@@ -6,10 +6,12 @@ import LowerHeader from "./LowerHeader";
 import { Link } from "react-router-dom";
 import { DataContext } from "../DataProvider/DataProvider";
 import { useContext } from "react";
-
+import amazonLogo from "../../assets/amazon_PNG11.png";
+import americanFlag from "../../assets/american-flag.png";
+import { auth } from "../../Utility/firebase";
 const Header = () => {
   const { state, dispatch } = useContext(DataContext);
-  const { basket } = state;
+  const { basket, user } = state;
   const totalItems = basket.reduce(
     (count, item) => count + (item.quantity || 1),
     0,
@@ -21,18 +23,15 @@ const Header = () => {
         <div className={classes.header_container}>
           <div className={classes.logo_container}>
             <Link to="/">
-              <img
-                src="https://pngimg.com/uploads/amazon/small/amazon_PNG11.png"
-                alt="amazon logo"
-              />
+              <img src={amazonLogo} alt="amazon logo" />
             </Link>
             <div className={classes.delivery_info}>
               <span>
-                <SlLocationPin />
+                <SlLocationPin size={20} />
               </span>
               <div>
                 <p>Deliver to</p>
-                <span>Ethiopia</span>
+                <span className={classes.ethiopia}>Ethiopia</span>
               </div>
             </div>
           </div>
@@ -45,18 +44,26 @@ const Header = () => {
           </div>
           <div className={classes.order_container}>
             <a href="" className={classes.language}>
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Flag_of_the_United_States_%28DDD-F-416E_specifications%29.svg/1920px-Flag_of_the_United_States_%28DDD-F-416E_specifications%29.svg.png"
-                alt=""
-              />
+              <img src={americanFlag} alt="American Flag" />
               <select name="" id="">
                 <option value="">EN</option>
               </select>
             </a>
 
-            <Link to="/signup">
-              <p>Sign In</p>
-              <span className={classes.bold}>Account and Lists</span>
+            <Link to={!user && "/auth"}>
+              <div>
+                {user ? (
+                  <>
+                    <p>Hello {user?.email?.split("@")[0]}</p>
+                    <p onClick={()=>auth.signOut()}>Sign Out</p>
+                  </>
+                ) : (
+                  <>
+                    <p>Hello, Sign In</p>
+                    <span className={classes.bold}>Account and Lists</span>
+                  </>
+                )}
+              </div>
             </Link>
             <Link to="/orders">
               <p>Returns</p>
@@ -68,7 +75,9 @@ const Header = () => {
               <div className={classes.cart_content}>
                 <p className={classes.cart_label}>Cart</p>
                 <p className={classes.cart_count}>
-                  {totalItems === 0 ? "Empty" : `${totalItems} item${totalItems !== 1 ? "s" : ""}`}
+                  {totalItems === 0
+                    ? "Empty"
+                    : `${totalItems} item${totalItems !== 1 ? "s" : ""}`}
                 </p>
               </div>
             </Link>
