@@ -6,7 +6,7 @@ import { DataContext, DataProvider } from "../DataProvider/DataProvider";
 import { type } from "../../Utility/action.type";
 import { useContext } from "react";
 
-function ProductCard({ product }) {
+function ProductCard({ product, hideAddButton, horizontal }) {
   const { state, dispatch } = useContext(DataContext);
 
   const addToCart = () => {
@@ -29,7 +29,7 @@ function ProductCard({ product }) {
     typeof product?.rating?.count === "number" ? product.rating.count : 0;
 
   return (
-    <div className={classes.card_container}>
+    <div className={`${classes.card_container} ${horizontal ? classes.horizontal_card : ""}`.trim()}>
       <Link to={`/products/${product.id}`} state={{ product }}>
         <img src={product.image} alt={product.title} />
       </Link>
@@ -43,9 +43,11 @@ function ProductCard({ product }) {
           {/*price*/}
           <CurrencyFormat amount={product.price} />
         </div>
-        <button className={classes.button} onClick={addToCart}>
-          Add to Cart
-        </button>
+        {!hideAddButton && (
+          <button className={classes.button} onClick={addToCart}>
+            Add to Cart
+          </button>
+        )}
       </div>
     </div>
   );
