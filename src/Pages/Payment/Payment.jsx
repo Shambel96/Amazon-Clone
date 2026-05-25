@@ -1,16 +1,21 @@
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LayOut from "../../Layout/LayOut";
 import classes from "./Payment.module.css";
 import { DataContext } from "../../Components/DataProvider/DataProvider";
 import ProductCard from "../../Components/Product/ProductCard";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { axiosInstance } from "../../Api/axios";
+import { db } from "../../Utility/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 function Payment() {
   const { state } = useContext(DataContext);
   const { basket, user } = state;
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
 
   const [clientSecret, setClientSecret] = useState("");
   const [processing, setProcessing] = useState(false);
@@ -19,7 +24,10 @@ function Payment() {
   const [disabled, setDisabled] = useState(true);
   const [statusMessage, setStatusMessage] = useState("");
 
-  const totalItems = basket.reduce((count, item) => count + (item.quantity || 1), 0);
+  const totalItems = basket.reduce(
+    (count, item) => count + (item.quantity || 1),
+    0,
+  );
   const totalAmount = basket.reduce(
     (sum, item) => sum + (item.price || 0) * (item.quantity || 1),
     0,
@@ -45,11 +53,15 @@ function Payment() {
         );
 
         setClientSecret(response.data.clientSecret);
-        setStatusMessage("Payment intent ready. Enter card details to complete checkout.");
+        setStatusMessage(
+          "Payment intent ready. Enter card details to complete checkout.",
+        );
         setError("");
       } catch (err) {
         setError(
-          err.response?.data?.error || err.message || "Unable to initialize payment.",
+          err.response?.data?.error ||
+            err.message ||
+            "Unable to initialize payment.",
         );
       }
     };
@@ -97,18 +109,42 @@ function Payment() {
         },
       },
     });
-
     if (payload.error) {
       setError(payload.error.message || "Payment failed.");
       setProcessing(false);
       setStatusMessage("");
-    } else {
-      setError("");
-      setProcessing(false);
-      setSucceeded(true);
-      setStatusMessage("Payment successful! Thank you for your order.");
+      return;
     }
+
+    const paymentIntent = payload.paymentIntent;
+    console.log("Payment payload:", payload);
+    console.log("User uid:", user?.uid, "PaymentIntent id:", paymentIntent?.id);
+    if (paymentIntent?.id) {
+      try {
+        if (user?.uid) {
+          await setDoc(doc(db, "users", user.uid, "orders", paymentIntent.id), {
+            basket,
+            amount: paymentIntent.amount,
+            created: paymentIntent.created,
+          });
+          console.log("Order saved to Firestore: users/" + user.uid + "/orders/" + paymentIntent.id);
+        } else {
+          console.warn("No user logged in — skipping Firestore write for orders.");
+        }
+      } catch (writeErr) {
+        console.error("Failed to write order to Firestore:", writeErr);
+        setError("Payment succeeded but saving order failed: " + writeErr.message);
+      }
+    } else {
+      console.warn("No paymentIntent id found — cannot save order to Firestore.");
+    }
+    setError("");
+    setProcessing(false);
+    setSucceeded(true);
+    setStatusMessage("Payment successful! Thank you for your order.");
+    navigate("/orders");
   };
+
 
   return (
     <LayOut>
@@ -143,7 +179,9 @@ function Payment() {
           <h3>Payment Method</h3>
           <div className={classes.payment_form_section}>
             <p className={classes.payment_description}>
-              Enter full Stripe card details to complete checkout. Use <strong>4242 4242 4242 4242</strong> with any future expiry date and any CVC.
+              Enter full Stripe card details to complete checkout. Use{" "}
+              <strong>4242 4242 4242 4242</strong> with any future expiry date
+              and any CVC.
             </p>
 
             <form onSubmit={handleSubmit} className={classes.payment_form}>
@@ -167,7 +205,6 @@ function Payment() {
                   }}
                   onChange={handleCardChange}
                 />
-                
               </div>
 
               <button
@@ -180,24 +217,23 @@ function Payment() {
                   !stripe ||
                   !elements
                 }
+                
               >
                 {processing
                   ? "Processing..."
                   : succeeded
-                  ? "Payment complete"
-                  : `Pay now ${new Intl.NumberFormat("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                    }).format(totalAmount)}`}
+                    ? "Payment complete"
+                    : `Pay now ${new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      }).format(totalAmount)}`}
               </button>
 
               {error && <div className={classes.error_message}>{error}</div>}
               {statusMessage && (
                 <div
                   className={
-                    succeeded
-                      ? classes.success_message
-                      : classes.status_message
+                    succeeded ? classes.success_message : classes.status_message
                   }
                 >
                   {statusMessage}
