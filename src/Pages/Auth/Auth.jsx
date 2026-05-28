@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import classes from "./Auth.module.css";
 import amazonLogo from "../../assets/amazon-logo.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { auth } from "../../Utility/firebase";
 import {
   createUserWithEmailAndPassword,
@@ -19,6 +19,7 @@ function Auth() {
     signup: false,
   });
   const navigate = useNavigate();
+  const navStateData = useLocation();
   //console.log(email, password);
   const { state, dispatch } = useContext(DataContext);
   //console.log(state.user);
@@ -36,7 +37,7 @@ function Auth() {
         .then((userCredential) => {
           dispatch({ type: "SET_USER", user: userCredential.user });
           setLoading({ ...loading, signin: false });
-          navigate("/");
+          navigate(navStateData?.state?.redirect || "/");
         })
         .catch((error) => {
           setError(error.message);
@@ -48,7 +49,7 @@ function Auth() {
         .then((userCredential) => {
           dispatch({ type: "SET_USER", user: userCredential.user });
           setLoading({ ...loading, signup: false });
-          navigate("/auth");
+          navigate(navStateData?.state?.redirect || "/auth");
         })
         .catch((error) => {
           setError(error.message);
@@ -64,6 +65,18 @@ function Auth() {
         </Link>
         <div className={classes.auth_Form}>
           <h2>Sign In {error && <p style={{ color: "red" }}>{error}</p>}</h2>
+          {navStateData?.state?.msg && (
+            <small
+              style={{
+                padding: "5px",
+                textAlign: "center",
+                color: "red",
+                fontWeight: "bold",
+              }}
+            >
+              {navStateData?.state?.msg}
+            </small>
+          )}
           <form action="">
             <div>
               <label htmlFor="email">Email</label>
