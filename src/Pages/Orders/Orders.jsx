@@ -49,7 +49,7 @@ function Orders() {
           {/* your orders */}
           <div>
             {orders.length === 0 ? (
-              <p>No orders yet.</p>
+              <p style={{ fontSize: "18px", padding: "10px" }}>No orders yet.</p>
             ) : (
               orders.map((eachOrder, i) => (
                 <div key={eachOrder.id || i} className={classes.order_block}>
