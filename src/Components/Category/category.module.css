@@ -112,7 +112,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   place-items: center;
-  margin-top: -10%;
+  margin-top: -17%;
   gap: 24px;
   padding: 0 16px;
 }
