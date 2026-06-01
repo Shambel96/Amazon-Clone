@@ -8,9 +8,13 @@
     border-radius: 8px;
     margin-bottom: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 20px auto 10px;
 }
 
 .payment {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
     background-color: #fff;
 }
@@ -183,6 +187,32 @@
 
     .flex h3 {
         min-width: auto;
+    }
+}
+
+@media (max-width: 620px) {
+    .payment {
+        padding: 16px;
+    }
+
+    .flex {
+        padding: 20px;
+        gap: 16px;
+    }
+
+    .review_items_container > div {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .review_items_container > div img {
+        width: 100%;
+        max-width: 120px;
+        height: auto;
+    }
+
+    .payment_form_section {
+        padding: 18px;
     }
 }
 

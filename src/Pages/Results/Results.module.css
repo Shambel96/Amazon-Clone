@@ -2,7 +2,21 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     max-width: 1000px;
-    margin: 100px auto 100px auto;
+    margin: 60px auto 80px auto;
     gap: 50px;
     justify-items: center;
+}
+
+.result_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+@media (max-width: 700px) {
+    .product_grid {
+        gap: 24px;
+        margin: 40px auto 60px auto;
+    }
+
 }
