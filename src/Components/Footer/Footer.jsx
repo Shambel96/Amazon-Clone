@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import styles from "./Footer.module.css";
 import amazonLogo from "../../assets/amazon_PNG11.png";
 import americanFlag from "../../assets/american-flag.png";
-import { IoIosArrowUp } from "react-icons/io";
 
 function Footer() {
     return (
@@ -12,7 +11,7 @@ function Footer() {
                 className={styles.back_to_top}
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
-                <IoIosArrowUp />
+                Back to top
 
             </div>
 
