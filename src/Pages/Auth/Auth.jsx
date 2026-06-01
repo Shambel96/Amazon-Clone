@@ -58,7 +58,7 @@ function Auth() {
     }
   };
   return (
-    <>
+    <div style={{backgroundColor:"#fff"}}>
       <div className={classes.auth_Container}>
         <Link to="/">
           <img src={amazonLogo} alt="amazon-logo" />
@@ -130,7 +130,7 @@ function Auth() {
           <p>© 1996-2024, Amazon-clone.com, Inc. or its affiliates</p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

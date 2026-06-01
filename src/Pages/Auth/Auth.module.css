@@ -20,7 +20,9 @@
   border-radius: 8px;
   border: lightgray solid 1px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 350px;
+  width: 100%;
+  max-width: 400px;
+  min-width: auto;
 }
 
 .auth_Form div {
@@ -92,6 +94,16 @@
 
 .signUp:hover {
   background-color: lightgray;
+}
+
+@media (max-width: 420px) {
+  .auth_Container {
+    padding: 0 16px;
+  }
+
+  .auth_Form {
+    padding: 1rem;
+  }
 }
 
 .underlineFooter {
