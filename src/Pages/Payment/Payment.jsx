@@ -9,9 +9,10 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { axiosInstance } from "../../Api/axios";
 import { db } from "../../Utility/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { type } from "../../Utility/action.type";
 
 function Payment() {
-  const { state } = useContext(DataContext);
+  const { state, dispatch } = useContext(DataContext);
   const { basket, user } = state;
   const stripe = useStripe();
   const elements = useElements();
@@ -32,6 +33,22 @@ function Payment() {
     (sum, item) => sum + (item.price || 0) * (item.quantity || 1),
     0,
   );
+
+  const buttonDisabled =
+    processing ||
+    disabled ||
+    succeeded ||
+    !clientSecret ||
+    !stripe ||
+    !elements;
+
+  const disabledReasons = [];
+  if (processing) disabledReasons.push("processing");
+  if (disabled) disabledReasons.push("card details incomplete");
+  if (succeeded) disabledReasons.push("payment already completed");
+  if (!clientSecret) disabledReasons.push("missing clientSecret");
+  if (!stripe) disabledReasons.push("Stripe not loaded");
+  if (!elements) disabledReasons.push("Stripe Elements not initialized");
 
   useEffect(() => {
     const createPaymentIntent = async () => {
@@ -138,6 +155,7 @@ function Payment() {
     } else {
       console.warn("No paymentIntent id found — cannot save order to Firestore.");
     }
+    dispatch({type: type.EMPTY_BASKET});
     setError("");
     setProcessing(false);
     setSucceeded(true);
@@ -209,15 +227,7 @@ function Payment() {
 
               <button
                 className={classes.pay_button}
-                disabled={
-                  processing ||
-                  disabled ||
-                  succeeded ||
-                  !clientSecret ||
-                  !stripe ||
-                  !elements
-                }
-                
+                disabled={buttonDisabled}
               >
                 {processing
                   ? "Processing..."
@@ -228,6 +238,13 @@ function Payment() {
                         currency: "USD",
                       }).format(totalAmount)}`}
               </button>
+
+              <div className={classes.status_message}>
+                <strong>Payment button status:</strong> {buttonDisabled ? "Disabled" : "Enabled"}
+                {disabledReasons.length > 0 && (
+                  <div>Reason: {disabledReasons.join(", ")}</div>
+                )}
+              </div>
 
               {error && <div className={classes.error_message}>{error}</div>}
               {statusMessage && (
