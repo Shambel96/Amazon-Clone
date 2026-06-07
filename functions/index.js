@@ -18,7 +18,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/payment/create", async (req, res) => {
-  const total = parseInt(req.query.total, 10);
+  const totalQuery = req.query.total;
+  const totalBody = req.body?.total;
+  const total = parseInt(totalQuery || totalBody, 10);
 
   if (Number.isNaN(total) || total <= 0) {
     return res.status(400).json({
@@ -30,6 +32,10 @@ app.post("/payment/create", async (req, res) => {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: total,
       currency: "usd",
+      payment_method_types: ["card"],
+      metadata: {
+        integration_check: "accept_a_payment",
+      },
     });
 
     logger.info("Created Stripe PaymentIntent", paymentIntent.id);
