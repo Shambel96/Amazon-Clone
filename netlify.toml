@@ -1,0 +1,12 @@
+[build]
+  # The command to compile your Vite project
+  command = "npm run build"
+  
+  # The directory where Vite outputs production files
+  publish = "dist"
+
+[[redirects]]
+  # Fixes 404 errors on refresh when using React Router
+  from = "/*"
+  status = 200
+  to = "/index.html"
