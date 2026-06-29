@@ -57,7 +57,7 @@
   transition: background-color 180ms ease, color 180ms ease,
     transform 180ms ease, border-color 180ms ease;
   position: relative;
-  margin-top: 25px;
+  margin-top: 24px;
 }
 
 .category p::after {
