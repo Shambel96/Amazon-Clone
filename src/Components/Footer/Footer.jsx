@@ -59,6 +59,7 @@ function Footer() {
                             <img src={americanFlag} alt="United States" className={styles.footer_flag} />
                         </div>
                         <div>© {new Date().getFullYear()} Amazon Clone</div>
+                        <div>Developed by Shambel Dechu</div>
                     </div>
                 </div>
             </div>
